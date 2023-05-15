@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from datetime import timedelta
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'authentication',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -57,8 +61,27 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS=True
+CORS_ORIGIN_WHITELIST = [    "http://localhost:3000",]
+CORS_ALLOW_CREDENTIALS = True
+
 ALLOWED_HOSTS=['*']
 ROOT_URLCONF = 'backend.urls'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME' : timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME' : timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS' : True,
+    'BLACKLIST_AFTER_ROTATION' : True,    
+}
+
 
 TEMPLATES = [
     {
@@ -134,3 +157,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'authentication.User'

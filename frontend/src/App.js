@@ -1,28 +1,22 @@
-import axios from 'axios';
-import {useState, useEffect} from 'react';
+import './App.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {Login} from "./components/loginReg/Login";
+import { Signup } from './components/loginReg/Register';
+import {Dashboard} from "./components/Dashboard";
+import {Navigation} from './components/Nav';
+import {Logout} from './components/loginReg/Logout';
+
 
 function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/test/')
-      .then(res => {
-        console.log(res.data.data);
-        setData(res.data.data);
-      })
-      .catch(err => console.log(err));
-  })
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>An Awesome Project </h1>
-        <h3>On Django, React, SQL, and Docker </h3>
-
-        <p>{data}</p>
-      </header>
-    </div>
-  );
-}
-
+    return (
+      <BrowserRouter>
+        <Navigation></Navigation>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup></Signup>}/>
+          <Route path="/logout" element={<Logout/>}/>
+        </Routes>
+      </BrowserRouter>
+)}
 export default App;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import BbsCard from './bbsCard/BBSCard';
 
 
 export const Dashboard = () => {
@@ -27,7 +28,7 @@ export const Dashboard = () => {
     }, []);
     return (
         <div className="form-signin mt-5 text-center">
-            <h3>Hi {message}</h3>
+            <BbsCard/>
         </div>
     );
 }

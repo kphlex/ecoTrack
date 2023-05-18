@@ -3,7 +3,7 @@ import { useState } from "react";
 
 // Define the Login function.
 export const Login = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     // Create the submit method.
@@ -11,7 +11,7 @@ export const Login = () => {
         e.preventDefault();
     
         const user = {
-            username: username,
+            email: email,
             password: password
         };
         console.log(user);
@@ -50,15 +50,15 @@ export const Login = () => {
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">Sign In</h3>
                     <div className="form-group mt-3">
-                        <label>Username</label>
+                        <label>Email</label>
                         <input
                             className="form-control mt-1"
-                            placeholder="Enter Username"
-                            name='username'
+                            placeholder="Enter email"
+                            name='email'
                             type='text'
-                            value={username}
+                            value={email}
                             required
-                            onChange={e => setUsername(e.target.value)}
+                            onChange={e => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="form-group mt-3">

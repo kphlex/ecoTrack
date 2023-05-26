@@ -59,7 +59,7 @@ class Employee(AbstractBaseUser):
     objects = EmployeeManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username', 'title', 'certifications', 'hire_date', 'admin_level']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username', 'title', 'hire_date']
     
 
     def __str__(self):

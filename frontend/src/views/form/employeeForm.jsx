@@ -42,10 +42,10 @@ const Form = () => {
                                 label="First Name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.firstName}
-                                name="firstName"
-                                error={!!touched.firstName && !!errors.firstName}
-                                helperText={touched.firstName && errors.firstName}
+                                value={values.first_name}
+                                name="first_name"
+                                error={!!touched.first_name && !!errors.first_name}
+                                helperText={touched.first_name && errors.first_name}
                                 sx={{ gridColumn: "span 2" }}
                             />
                             <TextField
@@ -55,10 +55,10 @@ const Form = () => {
                                 label="Last Name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.lastName}
-                                name="lastName"
-                                error={!!touched.lastName && !!errors.lastName}
-                                helperText={touched.lastName && errors.lastName}
+                                value={values.last_name}
+                                name="last_name"
+                                error={!!touched.last_name && !!errors.last_name}
+                                helperText={touched.last_name && errors.last_name}
                                 sx={{ gridColumn: "span 2" }}
                             />
                             <TextField
@@ -78,39 +78,78 @@ const Form = () => {
                                 fullWidth
                                 variant="filled"
                                 type="text"
-                                label="Contact Number"
+                                label="Username"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.contact}
-                                name="contact"
-                                error={!!touched.contact && !!errors.contact}
-                                helperText={touched.contact && errors.contact}
+                                value={values.username}
+                                name="username"
+                                error={!!touched.username && !!errors.username}
+                                helperText={touched.username && errors.username}
                                 sx={{ gridColumn: "span 4" }}
                             />
                             <TextField
                                 fullWidth
                                 variant="filled"
                                 type="text"
-                                label="Address 1"
+                                label="Title"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.address1}
-                                name="address1"
-                                error={!!touched.address1 && !!errors.address1}
-                                helperText={touched.address1 && errors.address1}
+                                value={values.title}
+                                name="title"
+                                error={!!touched.title && !!errors.title}
+                                helperText={touched.title && errors.title}
                                 sx={{ gridColumn: "span 4" }}
                             />
                             <TextField
                                 fullWidth
                                 variant="filled"
                                 type="text"
-                                label="Address 2"
+                                label="Certifications"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.address2}
-                                name="address2"
-                                error={!!touched.address2 && !!errors.address2}
-                                helperText={touched.address2 && errors.address2}
+                                value={values.certifications}
+                                name="certifications"
+                                error={!!touched.certifications && !!errors.certifications}
+                                helperText={touched.certifications && errors.certifications}
+                                sx={{ gridColumn: "span 4" }}
+                            />
+                            <TextField
+                                fullWidth
+                                variant="filled"
+                                type="date"
+                                label="Hire Date"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.hire_date}
+                                name="hire_date"
+                                error={!!touched.hire_date && !!errors.hire_date}
+                                helperText={touched.hire_date && errors.hire_date}
+                                sx={{ gridColumn: "span 4" }}
+                            />
+                            <TextField
+                                fullWidth
+                                variant="filled"
+                                type="number"
+                                label="Admin Level"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.admin_level}
+                                name="admin_level"
+                                error={!!touched.admin_level && !!errors.admin_level}
+                                helperText={touched.admin_level && errors.admin_level}
+                                sx={{ gridColumn: "span 4" }}
+                            />
+                            <TextField
+                                fullWidth
+                                variant="filled"
+                                type="password"
+                                label="Password"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.password}
+                                name="password"
+                                error={!!touched.password && !!errors.password}
+                                helperText={touched.password && errors.password}
                                 sx={{ gridColumn: "span 4" }}
                             />
                         </Box>
@@ -128,12 +167,15 @@ const Form = () => {
 
 
 const initialValues = {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    contact: "",
-    address1: "",
-    address2: "",
+    username: "",
+    title: "",
+    certifications: "",
+    hire_date: "",
+    admin_level: 0,
+    password: "",
 };
 
 export default Form;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -15,26 +15,60 @@ import Calendar from './views/calendar/calendar';
 import About from './views/about';
 import Login from './views/loginReg/Login';
 import Signup from './views/loginReg/Register';
+import { useNavigate } from "react-router-dom";
+
 
 function App() {
     const [theme, colorMode] = useMode();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isSidebar, setIsSidebar] = useState(true);
+    const [userInfo, setUserInfo] = useState(null);
+    const [token, setToken] = useState('');
 
-    const handleLogin = () => {
-        // Perform login process
-        // Upon successful login, update the isAuthenticated state to true
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Check for the access token in local storage
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            // Update the authentication status and set the token
+            setIsAuthenticated(true);
+            setToken(storedToken);
+        } else {
+            // Navigate to the '/' path if there is no access token
+            navigate('/');
+        }
+    }, [navigate]);
+
+    const handleLogin = (token) => {
+        // Save the access token to local storage
+        localStorage.setItem('token', token);
+
+        // Update the authentication status and set the token
         setIsAuthenticated(true);
+        setToken(token);
     };
 
+    const handleLogout = () => {
+        // Clear the access token from local storage
+        localStorage.removeItem('token');
+
+        // Reset the authentication status, token, and user info
+        setIsAuthenticated(false);
+        setToken('');
+        setUserInfo(null);
+
+        // Navigate to the '/' path
+        navigate('/');
+    };
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <div className='app'>
-                    {isAuthenticated && <Sidebar isSidebar={isSidebar} />}
+                    {isAuthenticated && <Sidebar isSidebar={isSidebar} userInfo={userInfo} />}
                     <main className='content'>
-                        {isAuthenticated && <Topbar setIsSidebar={setIsSidebar} />}
+                        {isAuthenticated && <Topbar setIsSidebar={setIsSidebar} onLogout={handleLogout}/>}
                         <Routes>
                             <Route
                                 path="/"
@@ -42,7 +76,7 @@ function App() {
                                     isAuthenticated ? (
                                         <Navigate to="/dashboard" />
                                     ) : (
-                                        <Login onLogin={handleLogin} />
+                                        <Login onLogin={handleLogin} setUserInfo={setUserInfo} />
                                     )
                                 }
                             />

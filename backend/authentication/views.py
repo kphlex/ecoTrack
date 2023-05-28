@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from .serializers import EmployeeSerializer
+from .models import Employee
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -9,12 +10,30 @@ from rest_framework import status
 
 
 
-class DashboardView(APIView):
-    permission_classes = (IsAuthenticated, )
-    def get(self, request):
-        content = {'message': 'Welcome to the Dashboard'}
-        return Response(content)
-    
+class UserInfoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Retrieve the email from the request data
+        email = request.data.get('email')
+        print(email)
+
+        # Retrieve the employee based on the provided email
+        try:
+            employee = Employee.objects.get(email=email)
+        except Employee.DoesNotExist:
+            return Response({'error': 'Employee not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Return the response with the employee information
+        data = {
+            'first_name': employee.first_name,
+            'last_name': employee.last_name,
+            'username': employee.username,
+            'title': employee.title,
+            'email': employee.email,
+        }
+        return Response(data)
+
     
     
 class LogoutView(APIView):

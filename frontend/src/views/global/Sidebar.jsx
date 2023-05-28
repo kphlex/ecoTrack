@@ -35,13 +35,17 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 
-const Sidebar = () => {
+const Sidebar = ({isSidebar, userInfo}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState('Dashboard');
 
-
+    if (!userInfo) {
+        console.log(userInfo);
+        // If userInfo is null or undefined, display a loading state or return null
+        return <p>Loading...</p>;
+    }
     return (
         <Box
             sx={{
@@ -109,10 +113,10 @@ const Sidebar = () => {
                                     fontWeight="bold"
                                     sx={{ m: "10px 0 0 0" }}
                                 >
-                                    Cam
+                                    {userInfo && userInfo.first_name} {userInfo && userInfo.last_name}
                                 </Typography>
                                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                                    Dev Admin
+                                    {userInfo && userInfo.title}
                                 </Typography>
                             </Box>
                         </Box>

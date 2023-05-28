@@ -64,6 +64,18 @@ CORS_ALLOW_ALL_ORIGINS=True
 CORS_ORIGIN_WHITELIST = [    "http://localhost:3000",]
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
 ALLOWED_HOSTS=['*']
 ROOT_URLCONF = 'backend.urls'
 

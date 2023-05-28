@@ -1,16 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
-import { useState } from "react";
 import axios from "axios";
 import Header from "../../components/Header";
 
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+
+const Login = ({ onLogin, setUserInfo }) => {
 
     const handleFormSubmit = async (values) => {
-        console.log(values);
-
         const user = {
             email: values.email,
             password: values.password
@@ -28,19 +25,47 @@ const Login = () => {
                 }
             );
 
-            const data = response.data;
-            console.log(response.data);
+            const token = response.data;
+            localStorage.setItem('token', token);
 
-            // Replace the localStorage related code with appropriate formik-related state and handlers
+            // Make the second Axios call to retrieve user info
+            await fetchUserInfo(user.email, token);
+
+            // Call the onLogin callback to indicate successful login
+            onLogin();
         } catch (error) {
             console.error('Error occurred:', error);
         }
     };
 
+    const fetchUserInfo = async (email, token) => {
+        try {
+            const headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token.access}`,
+            };
+            console.log(headers);
+    
+            const userInfoResponse = await axios.post(
+                'http://localhost:8000/user/',
+                { email },
+                {
+                    headers: headers,
+                }
+            );
+    
+            const userInfo = userInfoResponse.data;
+            console.log('USER INFO', userInfo);
+            setUserInfo(userInfo);
+        } catch (error) {
+            console.error('Error occurred while fetching user info:', error);
+        }
+    };
+    
+
     return (
         <Box m="20px">
             <Header title="LOGIN" subtitle="Sign In to Your Account" />
-
             <Formik
                 onSubmit={handleFormSubmit}
                 initialValues={{

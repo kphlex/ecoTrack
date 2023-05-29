@@ -1,4 +1,5 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, IconButton, Typography, useTheme, Modal } from "@mui/material";
+import { useState } from "react";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
@@ -12,17 +13,27 @@ import LineChart from "../../components/LineChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import BbsCard from "../../components/BBSCard";
+
 
 const Dashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [showModal, setShowModal] = useState(false);
 
+    const handleOpenModal = () => {
+        console.log(showModal);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
     return (
         <Box m="20px">
             {/* HEADER */}
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Header title="DASHBOARD" subtitle="Welcome" />
-
                 <Box>
                 <Button
                         sx={{
@@ -33,6 +44,7 @@ const Dashboard = () => {
                             padding: "10px 20px",
                             marginRight: "20px",
                         }}
+                        onClick={handleOpenModal}
                     >
                         <PublishOutlinedIcon sx={{ mr: "10px" }} />
                         Submit BBS Card
@@ -51,7 +63,7 @@ const Dashboard = () => {
                     </Button>
                 </Box>
             </Box>
-
+            {showModal && <BbsCard />}
             {/* GRID & CHARTS */}
             <Box
                 display="grid"

@@ -5,13 +5,10 @@ services:
     image: mysql:latest
     ports:
       - '3306:3306'
-
     environment:
       - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
       - MYSQL_DATABASE=${DATABASE}
-      - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}
-
     volumes:
       - ./data/db:/var/lib/mysql/
 
@@ -19,13 +16,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-
     ports:
       - '3000:3000'
-
     volumes:
       - ./frontend:/app/frontend
-
     depends_on:
       - backend
 
@@ -33,19 +27,14 @@ services:
     build: 
       context: ./backend
       dockerfile: Dockerfile
-
     environment:
       - MYSQL_HOST=db
       - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
       - MYSQL_DATABASE=${DATABASE}
-      - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}
-
     ports:
       - '8000:8000'
-
     volumes:
       - ./backend:/app/backend
-
     depends_on:
       - db

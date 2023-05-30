@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 
 class EmployeeManager(BaseUserManager):
-    def create_employee(self, first_name, last_name, username, title, certifications, hire_date, email, password=None, admin_level=0):
+    def create_employee(self, first_name, last_name, username, title, hire_date, email, password=None, admin_level=0):
         if not email:
             raise ValueError('Employees must have an email address')
 
@@ -14,7 +14,7 @@ class EmployeeManager(BaseUserManager):
             last_name=last_name,
             username=username,
             title=title,
-            certifications=certifications,
+            # certifications=certifications,
             hire_date=hire_date,
             admin_level=admin_level,
             email=self.normalize_email(email),
@@ -28,14 +28,14 @@ class EmployeeManager(BaseUserManager):
         return employee
     
     
-    def create_superuser(self, first_name, last_name, username, title, certifications, hire_date, email, password, admin_level=3):
+    def create_superuser(self, first_name, last_name, username, title, hire_date, email, password, admin_level=3):
         # Create a superuser by calling the create_employee method with admin_level=3
         return self.create_employee(
             first_name=first_name,
             last_name=last_name,
             username=username,
             title=title,
-            certifications=certifications,
+            # certifications=certifications,
             hire_date=hire_date,
             email=email,
             password=password,
